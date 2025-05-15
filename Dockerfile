@@ -6,6 +6,9 @@ WORKDIR /app
 COPY go.mod ./
 RUN go mod download && go mod verify
 
+# Install sqlc
+RUN go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
 COPY . .
 RUN go build -v -o main .
 
