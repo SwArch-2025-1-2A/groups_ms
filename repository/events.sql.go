@@ -98,8 +98,8 @@ func (q *Queries) GetEventById(ctx context.Context, id pgtype.UUID) (Event, erro
 
 const getEvents = `-- name: GetEvents :many
 SELECT id, title, description, place, coordinates, starts_at, ends_at, capacity, user_creator_id, group_creator_id, created_at, updated_at, deleted_at FROM "Event" 
+WHERE "deleted_at" IS NULL
 ORDER BY "starts_at"
-  AND "deleted_at" IS NULL
 `
 
 func (q *Queries) GetEvents(ctx context.Context) ([]Event, error) {
@@ -140,6 +140,7 @@ const getEventsByCreator = `-- name: GetEventsByCreator :many
 SELECT id, title, description, place, coordinates, starts_at, ends_at, capacity, user_creator_id, group_creator_id, created_at, updated_at, deleted_at FROM "Event"
 WHERE "user_creator_id" = $1
   AND "deleted_at" IS NULL
+ORDER BY "starts_at"
 `
 
 func (q *Queries) GetEventsByCreator(ctx context.Context, userCreatorID pgtype.UUID) ([]Event, error) {
@@ -180,6 +181,7 @@ const getEventsByGroup = `-- name: GetEventsByGroup :many
 SELECT id, title, description, place, coordinates, starts_at, ends_at, capacity, user_creator_id, group_creator_id, created_at, updated_at, deleted_at FROM "Event"
 WHERE "group_creator_id" = $1
   AND "deleted_at" IS NULL
+ORDER BY "starts_at"
 `
 
 func (q *Queries) GetEventsByGroup(ctx context.Context, groupCreatorID pgtype.UUID) ([]Event, error) {
@@ -219,7 +221,8 @@ func (q *Queries) GetEventsByGroup(ctx context.Context, groupCreatorID pgtype.UU
 const getEventsStartedInRange = `-- name: GetEventsStartedInRange :many
 SELECT id, title, description, place, coordinates, starts_at, ends_at, capacity, user_creator_id, group_creator_id, created_at, updated_at, deleted_at FROM "Event"
 WHERE "starts_at" BETWEEN $1 AND $2
-AND "deleted_at" IS NULL
+  AND "deleted_at" IS NULL
+ORDER BY "starts_at"
 `
 
 type GetEventsStartedInRangeParams struct {
