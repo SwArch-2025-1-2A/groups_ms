@@ -6,9 +6,6 @@ WORKDIR /app
 COPY go.mod ./
 RUN go mod download && go mod verify
 
-# Install sqlc
-RUN go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
-
 # Install migrate
 RUN go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
