@@ -9,7 +9,16 @@ RUN go mod download && go mod verify
 # Install sqlc
 RUN go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 
+# Install migrate
+RUN go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+# Copy start script and make it executable
+COPY start.sh .
+RUN chmod +x start.sh
+
+# Copy the rest of the application code and build the application
 COPY . .
 RUN go build -v -o main .
 
-CMD ["/app/main"]
+# Run migrations before starting the application
+CMD ["./start.sh"]
