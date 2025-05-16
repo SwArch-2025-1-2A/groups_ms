@@ -1,0 +1,1 @@
+ALTER TABLE "Event" ALTER COLUMN user_creator_id DROP NOT NULL;
