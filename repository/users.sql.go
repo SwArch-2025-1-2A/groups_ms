@@ -8,6 +8,7 @@ package repository
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -18,8 +19,8 @@ RETURNING user_id, interest_id
 `
 
 type AddUserInterestParams struct {
-	UserID     pgtype.UUID
-	InterestID pgtype.UUID
+	UserID     uuid.UUID
+	InterestID uuid.UUID
 }
 
 func (q *Queries) AddUserInterest(ctx context.Context, arg AddUserInterestParams) (UserInterest, error) {
@@ -37,7 +38,7 @@ RETURNING id, name, profile_pic
 `
 
 type ChangeUserNameParams struct {
-	ID   pgtype.UUID
+	ID   uuid.UUID
 	Name string
 }
 
@@ -56,7 +57,7 @@ RETURNING id, name, profile_pic
 `
 
 type ChangeUserProfilePicParams struct {
-	ID         pgtype.UUID
+	ID         uuid.UUID
 	ProfilePic pgtype.Text
 }
 
@@ -76,7 +77,7 @@ RETURNING id, name, profile_pic
 `
 
 type ChangeUserPropertiesParams struct {
-	ID         pgtype.UUID
+	ID         uuid.UUID
 	Name       string
 	ProfilePic pgtype.Text
 }
@@ -95,7 +96,7 @@ RETURNING id, name, profile_pic
 `
 
 type CreateUserParams struct {
-	ID         pgtype.UUID
+	ID         uuid.UUID
 	Name       string
 	ProfilePic pgtype.Text
 }
@@ -113,7 +114,7 @@ FROM "User"
 WHERE "id" = $1
 `
 
-func (q *Queries) GetUserById(ctx context.Context, id pgtype.UUID) (User, error) {
+func (q *Queries) GetUserById(ctx context.Context, id uuid.UUID) (User, error) {
 	row := q.db.QueryRow(ctx, getUserById, id)
 	var i User
 	err := row.Scan(&i.ID, &i.Name, &i.ProfilePic)
@@ -129,7 +130,7 @@ WHERE ui.user_id = $1
   AND c.deleted_at IS NULL
 `
 
-func (q *Queries) GetUserInterests(ctx context.Context, userID pgtype.UUID) ([]Category, error) {
+func (q *Queries) GetUserInterests(ctx context.Context, userID uuid.UUID) ([]Category, error) {
 	rows, err := q.db.Query(ctx, getUserInterests, userID)
 	if err != nil {
 		return nil, err
@@ -162,8 +163,8 @@ WHERE "user_id" = $1
 `
 
 type RemoveUserInterestParams struct {
-	UserID     pgtype.UUID
-	InterestID pgtype.UUID
+	UserID     uuid.UUID
+	InterestID uuid.UUID
 }
 
 func (q *Queries) RemoveUserInterest(ctx context.Context, arg RemoveUserInterestParams) error {

@@ -8,6 +8,7 @@ package repository
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -34,7 +35,7 @@ type CreateEventParams struct {
 	StartsAt       pgtype.Timestamp
 	EndsAt         pgtype.Timestamp
 	Capacity       pgtype.Int4
-	UserCreatorID  pgtype.UUID
+	UserCreatorID  uuid.UUID
 	GroupCreatorID pgtype.UUID
 }
 
@@ -75,7 +76,7 @@ WHERE "id" = $1
   AND "deleted_at" IS NULL
 `
 
-func (q *Queries) GetEventById(ctx context.Context, id pgtype.UUID) (Event, error) {
+func (q *Queries) GetEventById(ctx context.Context, id uuid.UUID) (Event, error) {
 	row := q.db.QueryRow(ctx, getEventById, id)
 	var i Event
 	err := row.Scan(
@@ -143,7 +144,7 @@ WHERE "user_creator_id" = $1
 ORDER BY "starts_at"
 `
 
-func (q *Queries) GetEventsByCreator(ctx context.Context, userCreatorID pgtype.UUID) ([]Event, error) {
+func (q *Queries) GetEventsByCreator(ctx context.Context, userCreatorID uuid.UUID) ([]Event, error) {
 	rows, err := q.db.Query(ctx, getEventsByCreator, userCreatorID)
 	if err != nil {
 		return nil, err
@@ -279,7 +280,7 @@ RETURNING id, title, description, place, coordinates, starts_at, ends_at, capaci
 `
 
 type ModifyEventParams struct {
-	ID          pgtype.UUID
+	ID          uuid.UUID
 	Title       pgtype.Text
 	Description pgtype.Text
 	Place       pgtype.Text
@@ -326,7 +327,7 @@ WHERE "id" = $1
 RETURNING id, title, description, place, coordinates, starts_at, ends_at, capacity, user_creator_id, group_creator_id, created_at, updated_at, deleted_at
 `
 
-func (q *Queries) SoftDeleteEvent(ctx context.Context, id pgtype.UUID) (Event, error) {
+func (q *Queries) SoftDeleteEvent(ctx context.Context, id uuid.UUID) (Event, error) {
 	row := q.db.QueryRow(ctx, softDeleteEvent, id)
 	var i Event
 	err := row.Scan(

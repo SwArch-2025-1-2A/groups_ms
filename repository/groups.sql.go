@@ -8,6 +8,7 @@ package repository
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -53,7 +54,7 @@ WHERE "id" = $1
 RETURNING id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at
 `
 
-func (q *Queries) SoftDeleteGroup(ctx context.Context, id pgtype.UUID) (Group, error) {
+func (q *Queries) SoftDeleteGroup(ctx context.Context, id uuid.UUID) (Group, error) {
 	row := q.db.QueryRow(ctx, softDeleteGroup, id)
 	var i Group
 	err := row.Scan(
@@ -77,7 +78,7 @@ WHERE "id" = $1
 RETURNING id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at
 `
 
-func (q *Queries) VerifyGroup(ctx context.Context, id pgtype.UUID) (Group, error) {
+func (q *Queries) VerifyGroup(ctx context.Context, id uuid.UUID) (Group, error) {
 	row := q.db.QueryRow(ctx, verifyGroup, id)
 	var i Group
 	err := row.Scan(

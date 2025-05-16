@@ -32,15 +32,9 @@ func run() error {
 	}
 	log.Println(events)
 
-	var id pgtype.UUID = pgtype.UUID{}
-
-	if err := id.Scan(uuid.New().String()); err != nil {
-		log.Fatalln(err)
-	}
-
 	// create a user
 	insertedUser, err := queries.CreateUser(ctx, repository.CreateUserParams{
-		ID:   id,
+		ID:   uuid.New(),
 		Name: "John Doe",
 		ProfilePic: pgtype.Text{
 			String: "https://example.com/profile.jpg"},

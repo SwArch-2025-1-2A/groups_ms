@@ -8,6 +8,7 @@ import (
 	"database/sql/driver"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -100,7 +101,7 @@ func (ns NullMemberRole) Value() (driver.Value, error) {
 }
 
 type Category struct {
-	ID        pgtype.UUID
+	ID        uuid.UUID
 	Category  pgtype.Text
 	CreatedAt pgtype.Timestamp
 	UpdatedAt pgtype.Timestamp
@@ -108,7 +109,7 @@ type Category struct {
 }
 
 type Event struct {
-	ID          pgtype.UUID
+	ID          uuid.UUID
 	Title       pgtype.Text
 	Description pgtype.Text
 	// Description about the place or reference to the place
@@ -117,7 +118,7 @@ type Event struct {
 	StartsAt       pgtype.Timestamp
 	EndsAt         pgtype.Timestamp
 	Capacity       pgtype.Int4
-	UserCreatorID  pgtype.UUID
+	UserCreatorID  uuid.UUID
 	GroupCreatorID pgtype.UUID
 	CreatedAt      pgtype.Timestamp
 	UpdatedAt      pgtype.Timestamp
@@ -125,7 +126,7 @@ type Event struct {
 }
 
 type Group struct {
-	ID          pgtype.UUID
+	ID          uuid.UUID
 	Name        pgtype.Text
 	Description pgtype.Text
 	ProfilePic  pgtype.Text
@@ -137,13 +138,13 @@ type Group struct {
 }
 
 type GroupCategory struct {
-	GroupID    pgtype.UUID
-	InterestID pgtype.UUID
+	GroupID    uuid.UUID
+	InterestID uuid.UUID
 }
 
 type JoinRequest struct {
-	UserID            pgtype.UUID
-	GroupID           pgtype.UUID
+	UserID            uuid.UUID
+	GroupID           uuid.UUID
 	MesssageFromUser  pgtype.Text
 	MesssageFromAdmin pgtype.Text
 	Status            NullJoinRequestStatus
@@ -153,24 +154,24 @@ type JoinRequest struct {
 }
 
 type Member struct {
-	ID      pgtype.UUID
+	ID      uuid.UUID
 	Role    MemberRole
-	GroupID pgtype.UUID
-	UserID  pgtype.UUID
+	GroupID uuid.UUID
+	UserID  uuid.UUID
 }
 
 type Participant struct {
-	UserID  pgtype.UUID
-	EventID pgtype.UUID
+	UserID  uuid.UUID
+	EventID uuid.UUID
 }
 
 type User struct {
-	ID         pgtype.UUID
+	ID         uuid.UUID
 	Name       string
 	ProfilePic pgtype.Text
 }
 
 type UserInterest struct {
-	UserID     pgtype.UUID
-	InterestID pgtype.UUID
+	UserID     uuid.UUID
+	InterestID uuid.UUID
 }
