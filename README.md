@@ -1,5 +1,40 @@
 # Main API
 
+## Database migrations
+
+The project uses [migrate](https://github.com/golang-migrate/migrate/). Here
+are some useful commands for working with migrations:
+
+### Create a new migration
+
+To create a new migration, run the following command:
+
+```sh
+migrate create -ext sql -dir db/migrations -seq <migration_name>
+```
+
+Replace `<migration_name>` with a descriptive name for your migration. This
+command will create a new migration file in the `db/migrations` directory with
+the specified name. The `-ext sql` flag specifies that the migration files
+should have the `.sql` extension, and the `-seq` flag specifies that the
+migration should be created with a sequential number.
+
+### Apply migrations
+
+To apply all pending migrations, run the following command:
+
+```sh
+migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" -verbose up
+```
+
+<!-- ### Rollback migrations
+
+To rollback the last applied migration, run the following command:
+
+```sh
+migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" down
+``` -->
+
 ## Building the project
 
 The recommended way to build the project is to use [Docker](#building-with-docker),
