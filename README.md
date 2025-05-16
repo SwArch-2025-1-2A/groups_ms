@@ -60,6 +60,14 @@ command, you may [run the project](#local-execution) using the generated executa
 
 ### Building with docker
 
+> [!IMPORTANT]
+> Make sure your `.dockerignore` file is set up correctly to exclude any
+> unnecessary files. Like so:
+
+```sh
+cat .gitignore .prodignore > .dockerignore
+```
+
 To build the project using Docker, you can use the provided Dockerfile. The
 Dockerfile is set up to build the Go application and create a Docker image.
 To build the Docker image, run the following command in the directory where the

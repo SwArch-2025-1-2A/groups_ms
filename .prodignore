@@ -1,0 +1,7 @@
+# Include at the top the file .gitignore
+
+!.env
+.vscode/extensions.json
+
+README.md
+.git/
