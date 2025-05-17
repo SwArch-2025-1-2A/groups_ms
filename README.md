@@ -27,13 +27,13 @@ To apply all pending migrations, run the following command:
 migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" -verbose up
 ```
 
-<!-- ### Rollback migrations
+### Rollback migrations
 
 To rollback the last applied migration, run the following command:
 
 ```sh
 migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" down
-``` -->
+```
 
 ## Building the project
 
@@ -109,18 +109,19 @@ To build the Docker image, run the following command in the directory where the
 Dockerfile is located:
 
 ```sh
-docker build -t go-api .
+docker compose build
 ```
 
-This command will create a Docker image named `go-api` based on the instructions
-in the Dockerfile. And you can run the Docker image using the provided
-[run](#using-docker-to-run) command.
+This command will create a Docker the needed images for each service based on the
+[docker compose](docker-compose.yml) configuration file. And you can run the Docker
+image using the provided [run](#using-docker-to-run) command.
 
 ## Running the project
 
 ### Local execution
 
-To run the project locally, you can use the following command:
+To run the project locally, you can use the following command.
+This will not run your database or any other dependency/service that you may need:
 
 ```sh
 go run main.go
@@ -135,12 +136,23 @@ Alternatively, if you have built the project using the
 
 ### Using Docker to run
 
-To run the project using Docker, you can use the following command:
+We personally recommend [this option](#running-while-rebuilding-images).
+
+#### Running without rebuilding
+
+It doesn't contemplate the current state of your files but the most recent built
+images.
 
 ```sh
-docker run -p 8080:8080 go-api
+docker compose up
 ```
 
-This command will run the Docker container based on the `go-api` image and map
-port 8080 of the container to port 8080 of your host machine. You can then
-access the API at `http://localhost:8080`.
+#### Running while rebuilding images
+
+This will allow you to start from the current version of your repository.
+This means that if you modified any file included in Docker, a new image will be
+built.
+
+```sh
+docker compose up --build
+```
