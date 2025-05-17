@@ -27,13 +27,13 @@ To apply all pending migrations, run the following command:
 migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" -verbose up
 ```
 
-<!-- ### Rollback migrations
+### Rollback migrations
 
 To rollback the last applied migration, run the following command:
 
 ```sh
 migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<port>/<database>?sslmode=disable" down
-``` -->
+```
 
 ## Building the project
 
