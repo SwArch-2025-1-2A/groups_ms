@@ -126,6 +126,21 @@ To build the whole project using Docker, you can use the provided
 to the building and running processes, including each needed service to run the
 project locally.
 
+> [!TIP]
+> If you want to have a _clean build_ you need to stop and remove containers,
+> networks by running:
+    ```sh
+    docker compose down --remove-orphans
+    ```
+
+If you want to remove the volumes too:
+
+```sh
+docker compose down --remove-orphans --volumes
+```
+
+---
+
 By default the API will be built in `release` [mode](#modes) and is built like this:
 
 ```sh
