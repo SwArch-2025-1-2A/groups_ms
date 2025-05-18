@@ -30,5 +30,11 @@ RUN go run github.com/99designs/gqlgen generate
 # Build the application
 RUN go build -v -o main .
 
+# `MODE` can be one of: debug, release or test
+ARG MODE=release
+ENV GIN_MODE=${MODE}
+
+RUN echo "Built in ${MODE} mode"
+
 # Run migrations before starting the application
 CMD ["./start.sh"]

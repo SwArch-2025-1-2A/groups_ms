@@ -1,6 +1,9 @@
 services:
   main-api:
-    build: .
+    build:
+      context: .
+      args:
+        MODE: ${MODE:-release}
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main-db:5432/meetun?sslmode=disable}
     depends_on:
