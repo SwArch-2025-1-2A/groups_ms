@@ -12,6 +12,8 @@ echo "Waiting for the database to be ready..."
 sleep 5
 
 # Run database migrations
+echo "Running migrations..."
 migrate -path db/migrations -database ${DATABASE_URL} -verbose up
 
+echo "Running the API now!"
 ./main
