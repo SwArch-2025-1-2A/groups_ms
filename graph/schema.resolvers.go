@@ -15,7 +15,12 @@ import (
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	randNumber, _ := rand.Int(rand.Reader, big.NewInt(100))
+	randNumber, err := rand.Int(rand.Reader, big.NewInt(100))
+
+	if err != nil {
+		return nil, err
+	}
+	
 	todo := &model.Todo{
 		Text: input.Text,
 		ID:   fmt.Sprintf("T%d", randNumber),
