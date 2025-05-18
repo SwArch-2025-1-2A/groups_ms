@@ -34,7 +34,9 @@ RUN go build -v -o main .
 ARG MODE=release
 ENV GIN_MODE=${MODE}
 
-RUN echo "Built in ${MODE} mode"
+EXPOSE ${PORT:-8008}
+
+RUN echo "Built in ${MODE} mode with port set to:" ${PORT:-8008}
 
 # Run migrations before starting the application
 CMD ["./start.sh"]

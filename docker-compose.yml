@@ -6,8 +6,11 @@ services:
         MODE: ${MODE:-release}
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main-db:5432/meetun?sslmode=disable}
+      PORT: 8008
     depends_on:
       - main-db
+    ports:
+      - 8008:8008
 
   main-db:
     image: postgres:latest
