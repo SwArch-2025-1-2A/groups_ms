@@ -133,9 +133,10 @@ project locally.
 > [!TIP]
 > If you want to have a _clean build_ you need to stop and remove containers,
 > networks by running:
-    ```sh
-    docker compose down --remove-orphans
-    ```
+
+```sh
+docker compose down --remove-orphans
+```
 
 If you want to remove the volumes too:
 
