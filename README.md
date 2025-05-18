@@ -80,6 +80,13 @@ project directory. Make sure you have
    in the `db` directory. The generated code will be placed in the `./repository`
    directory.
 
+5. Generate the GraphQL models and resolver(s) by running the following command
+in the project directory:
+
+    ```sh
+    go run github.com/99designs/gqlgen generate
+    ```
+
 #### Local build instructions
 
 To build the project locally, you need to have Go 1.24.3 or later installed on your
