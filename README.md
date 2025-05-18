@@ -133,6 +133,7 @@ image using the provided [run](#using-docker-to-run) command.
 > [!IMPORTANT]
 > In order to build and run the project, make sure you meet all the
 > [prerequisites](#prerequisites-for-local-build).
+<!-- This fixes renderization issues -->
 > [!NOTE]
 > These commands will not run your database or any other dependency/service
 > that you may need
