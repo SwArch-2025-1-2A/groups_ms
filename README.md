@@ -54,7 +54,8 @@ project locally, you can do so by following the instructions below.
 - sqlc (for generating SQL code)
 
 1. Install Go from the [official website](https://golang.org/dl/).
-2. Install sqlc by running the following command:
+2. Install sqlc by running the following command. Or
+visit [this page](https://docs.sqlc.dev/en/latest/overview/install.html#installing-sqlc):
 
     ```sh
     go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
