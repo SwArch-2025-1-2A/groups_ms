@@ -1,5 +1,13 @@
 # Main API
 
+## Modes
+
+The api can run in one these `MODE`s:
+
+- `release`:
+- `debug`:
+- `test`:
+
 ## Database migrations
 
 The project uses [migrate](https://github.com/golang-migrate/migrate/). Here
@@ -113,18 +121,27 @@ command, you may [run the project](#local-execution) using the generated executa
 cat .gitignore .prodignore > .dockerignore
 ```
 
-To build the project using Docker, you can use the provided Dockerfile. The
-Dockerfile is set up to build the Go application and create a Docker image.
-To build the Docker image, run the following command in the directory where the
-Dockerfile is located:
+To build the whole project using Docker, you can use the provided
+[docker-compose.yml](./docker-compose.yml). This will take care of everything related
+to the building and running processes, including each needed service to run the
+project locally.
+
+By default the API will be built in `release` [mode](#modes) and is built like this:
 
 ```sh
 docker compose build
 ```
 
-This command will create a Docker the needed images for each service based on the
-[docker compose](docker-compose.yml) configuration file. And you can run the Docker
-image using the provided [run](#using-docker-to-run) command.
+In case you need to build it in other [`<mode>`](#modes). Run the following command
+replacing `<mode>` with the one you need:
+
+```sh
+docker compose build --build-arg MODE=<mode>
+```
+
+This command will create the docker images the needed images for each service
+based on the [docker compose](docker-compose.yml) configuration file. And you can
+run the Docker image using the provided [run](#using-docker-to-run) command.
 
 ## Running the project
 
@@ -158,7 +175,7 @@ We personally recommend [this option](#running-while-rebuilding-images).
 #### Running without rebuilding
 
 It doesn't contemplate the current state of your files but the most recent built
-images.
+images. Make sure it is in the correct [`mode`](#modes)
 
 ```sh
 docker compose up
@@ -168,7 +185,7 @@ docker compose up
 
 This will allow you to start from the current version of your repository.
 This means that if you modified any file included in Docker, a new image will be
-built.
+built in the default mode and run after the building process has been completed
 
 ```sh
 docker compose up --build
