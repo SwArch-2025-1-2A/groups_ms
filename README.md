@@ -89,10 +89,11 @@ in the project directory:
 
 #### Local build instructions
 
-To build the project locally, you need to have Go 1.24.3 or later installed on your
-machine.
+> [!IMPORTANT]
+> In order to build and run the project, make sure you meet all the
+> [prerequisites](#prerequisites-for-local-build).
 
-In order to run the project, you just need to run the following command:
+After that you can build and run the project. Like this:
 
 ```sh
 go build -v -o main .
@@ -129,7 +130,9 @@ in the Dockerfile. And you can run the Docker image using the provided
 
 ### Local execution
 
-To run the project locally, you can use the following command:
+> [!IMPORTANT]
+> In order to build and run the project, make sure you meet all the
+> [prerequisites](#prerequisites-for-local-build).
 
 ```sh
 go run main.go
