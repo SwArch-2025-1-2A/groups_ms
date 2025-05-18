@@ -9,6 +9,10 @@ RUN go mod download && go mod verify
 # Install migrate
 RUN go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
+# Install sqlc and generate repositories
+RUN go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+RUN sqlc generate
+
 # Copy start script and make it executable
 COPY start.sh .
 RUN chmod +x start.sh
