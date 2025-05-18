@@ -140,7 +140,7 @@ If you want to remove the volumes too:
 docker compose down --remove-orphans --volumes
 ```
 
----
+#### Building modes in docker
 
 By default the API will be built in `release` [mode](#modes) and is built like this:
 
@@ -201,7 +201,8 @@ docker compose up
 
 This will allow you to start from the current version of your repository.
 This means that if you modified any file included in Docker, a new image will be
-built in the default mode and run after the building process has been completed
+built in the [default mode](#building-modes-in-docker) and run after the
+building process has been completed
 
 ```sh
 docker compose up --build
