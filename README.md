@@ -62,14 +62,14 @@ visit [this page](https://docs.sqlc.dev/en/latest/overview/install.html#installi
     ```
 
 3. Install the required Go modules by running the following command in the
-   project directory:
+project directory:
 
     ```sh
     go mod tidy
     ```
 
 4. Generate the required SQLC modules by running the following command in the
-   project directory:
+project directory:
 
     ```sh
     sqlc generate
