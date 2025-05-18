@@ -46,14 +46,15 @@ migrate -path db/migrations -database "postgres://<username>:<password>@<host>:<
 
 ## Building the project
 
-The recommended way to build the project is to use [Docker](#building-with-docker),
-as it ensures that the build environment is consistent and eliminates any potential
-issues with dependencies on your local machine. However, if you prefer to build the
-project locally, you can do so by following the instructions below.
+The recommended way to build the project is to use Docker
+[(click here)](#building-with-docker), as it ensures that the build environment
+is consistent and eliminates any potential issues with dependencies on your
+local machine. However, if you prefer to build the project locally, you can do so
+by following [these instructions](#local-build)
 
 ### Local build
 
-#### Prerequisites for local build
+#### 1. Prerequisites for local build
 
 > [!TIP]
 > You may not need to install all of the dependencies listed below if you are
@@ -96,11 +97,11 @@ in the project directory:
     go run github.com/99designs/gqlgen generate
     ```
 
-#### Local build instructions
+#### 2. Local build instructions
 
 > [!IMPORTANT]
 > In order to build and run the project, make sure you meet all the
-> [prerequisites](#prerequisites-for-local-build).
+> [prerequisites](#1-prerequisites-for-local-build).
 
 After that you can build and run the project. Like this:
 
@@ -111,6 +112,8 @@ go build -v -o main .
 This command compiles the current directory and all its subdirectories, and produces
 an executable file named `main` in the current directory. After running this
 command, you may [run the project](#local-execution) using the generated executable.
+
+---
 
 ### Building with docker
 
@@ -165,14 +168,14 @@ run the Docker image using the provided [run](#using-docker-to-run) command.
 
 > [!IMPORTANT]
 > In order to build and run the project, make sure you meet all the
-> [prerequisites](#prerequisites-for-local-build).
+> [prerequisites](#1-prerequisites-for-local-build).
 <!-- This fixes renderization issues -->
 > [!NOTE]
 > These commands will not run your database or any other dependency/service
 > that you may need
 
-If you have built the project using the
-[build](#local-build-instructions) command, you can run the generated executable:
+If you have built the project using the [build](#2-local-build-instructions)
+command, you can run the generated executable:
 
 ```sh
 ./main
