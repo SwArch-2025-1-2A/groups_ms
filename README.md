@@ -68,7 +68,7 @@ visit [this page](https://docs.sqlc.dev/en/latest/overview/install.html#installi
     go mod tidy
     ```
 
-4. Install the required SQLC modules by running the following command in the
+4. Generate the required SQLC modules by running the following command in the
    project directory:
 
     ```sh
