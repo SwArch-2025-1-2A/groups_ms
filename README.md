@@ -4,9 +4,10 @@
 
 The api can run in one these `MODE`s:
 
-- `release`:
-- `debug`:
-- `test`:
+- `release`: Production mode with optimized performance and minimal logging
+- `debug`: Development mode with detailed logging and error traces
+- `test`: Testing mode, useful to implement mock services and/or
+test-specific configurations
 
 ## Database migrations
 
