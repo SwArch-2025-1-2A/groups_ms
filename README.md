@@ -134,15 +134,17 @@ in the Dockerfile. And you can run the Docker image using the provided
 > In order to build and run the project, make sure you meet all the
 > [prerequisites](#prerequisites-for-local-build).
 
-```sh
-go run main.go
-```
-
-Alternatively, if you have built the project using the
+If you have built the project using the
 [build](#local-build-instructions) command, you can run the generated executable:
 
 ```sh
 ./main
+```
+
+To run the project locally without building, you can use the following command:
+
+```sh
+go run main.go
 ```
 
 ### Using Docker to run
