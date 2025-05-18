@@ -69,7 +69,8 @@ project directory:
     ```
 
 4. Generate the required SQLC modules by running the following command in the
-project directory:
+project directory. Make sure you have
+[applied all your migrations](#apply-migrations):
 
     ```sh
     sqlc generate
