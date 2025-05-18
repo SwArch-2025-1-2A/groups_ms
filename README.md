@@ -75,8 +75,8 @@ visit [this page](https://docs.sqlc.dev/en/latest/overview/install.html#installi
     sqlc generate
     ```
 
-   This command will generate the necessary SQL code based on the SQL files
-   in the `db` directory. The generated code will be placed in the `db/sqlc`
+   This command will generate the necessary go code based on the SQL files
+   in the `db` directory. The generated code will be placed in the `./repository`
    directory.
 
 #### Local build instructions
