@@ -1,5 +1,30 @@
 # Main API
 
+---
+
+## Table of contents
+
+- [Main API](#main-api)
+  - [Table of contents](#table-of-contents)
+  - [Modes](#modes)
+  - [Database migrations](#database-migrations)
+    - [Create a new migration](#create-a-new-migration)
+    - [Apply migrations](#apply-migrations)
+    - [Rollback migrations](#rollback-migrations)
+  - [Building the project](#building-the-project)
+    - [Local build](#local-build)
+      - [1. Prerequisites for local build](#1-prerequisites-for-local-build)
+      - [2. Local build instructions](#2-local-build-instructions)
+    - [Building with docker](#building-with-docker)
+      - [Building modes in docker](#building-modes-in-docker)
+  - [Running the project](#running-the-project)
+    - [Local execution](#local-execution)
+    - [Using Docker to run](#using-docker-to-run)
+      - [Running without rebuilding](#running-without-rebuilding)
+      - [Running while rebuilding images](#running-while-rebuilding-images)
+
+---
+
 ## Modes
 
 The api can run in one these `MODE`s:
