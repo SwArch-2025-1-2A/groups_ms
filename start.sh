@@ -9,11 +9,11 @@ fi
 
 # Wait for the database to be ready
 echo "Waiting for the database to be ready..."
-sleep 5
+sleep 10
 
 # Run database migrations
 echo "Running migrations..."
 migrate -path db/migrations -database ${DATABASE_URL} -verbose up
 
-echo "Running the API now!"
+echo "[[[MAIN API]]] Running the API now!"
 ./main

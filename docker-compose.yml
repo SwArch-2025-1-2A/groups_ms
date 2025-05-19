@@ -14,7 +14,7 @@ services:
       - 8008:8008
 
   main-db:
-    image: postgres:latest
+    image: postgres:17-alpine
     hostname: main_db # Hostname for which the container will be reachable
     # The port exposed within the hostname is `5432` unless modified
     restart: always
