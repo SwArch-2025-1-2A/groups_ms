@@ -5,8 +5,8 @@ services:
       args:
         MODE: ${MODE:-release}
     environment:
-      # `DATABASE_URL` uses the internal port to connect to `main-db` (the container one)
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main-db:5432/meetun?sslmode=disable}
+      # `DATABASE_URL` uses the internal port to connect to `main_db` (the container one)
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main_db:5432/meetun?sslmode=disable}
       PORT: 8008
     depends_on:
       - main-db
@@ -14,15 +14,14 @@ services:
       - 8008:8008
 
   main-db:
-    image: postgres:latest
-    hostname: main-db # Hostname for which the container will be reachable
+    image: postgres:17-alpine
+    hostname: main_db # Hostname for which the container will be reachable
+    # The port exposed within the hostname is `5432` unless modified
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-meetUN}
       POSTGRES_DB: ${POSTGRES_DB:-meetun}
-    ports:
-      - 5432:5432 # FIXME: We may not need to expose this database to the network
     volumes:
       - main-db-data:/var/lib/postgresql/data
 
