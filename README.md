@@ -18,6 +18,8 @@
       - [1. Prerequisites for local build](#1-prerequisites-for-local-build)
       - [2. Local build instructions](#2-local-build-instructions)
     - [Building with docker](#building-with-docker)
+    - [Partially clean enviroment](#partially-clean-enviroment)
+    - [Fully clean environment](#fully-clean-environment)
       - [Building modes in docker](#building-modes-in-docker)
   - [Running the project](#running-the-project)
     - [Local execution](#local-execution)
@@ -183,17 +185,26 @@ cat .gitignore .prodignore > .dockerignore
 To build the whole project using Docker, you can use the provided
 [docker-compose.yml](./docker-compose.yml). This will take care of everything related
 to the building and running processes, including each needed service to run the
-project locally.
+project locally. You can start from a
+[partially](#partially-clean-enviroment) clean environment or from a
+[clean environmentment](#fully-clean-environment).
+
+### Partially clean enviroment
 
 > [!TIP]
-> If you want to have a _clean build_ you need to stop and remove containers,
-> networks by running:
+> If you want to have a _almost_ clean build you need to stop
+> and remove containers, networks by running:
 
 ```sh
 docker compose down --remove-orphans
 ```
 
-If you want to remove the volumes too:
+### Fully clean environment
+
+> [!WARNING]
+> The following command gives you a clean slate to start from, but it
+> remove the volumes too. So any data that you may have, it will be
+> removed as well.
 
 ```sh
 docker compose down --remove-orphans --volumes
