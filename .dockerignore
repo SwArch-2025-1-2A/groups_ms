@@ -53,6 +53,7 @@ main
 
 # Docs
 README.md
+.env.example
 
 # Git
 .git/

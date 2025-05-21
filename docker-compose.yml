@@ -1,27 +1,44 @@
 services:
-  main-api:
+  mu_main_be:
     build:
       context: .
       args:
-        MODE: ${MODE:-release}
-    environment:
-      # `DATABASE_URL` uses the internal port to connect to `main_db` (the container one)
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main_db:5432/meetun?sslmode=disable}
-      PORT: 8008
-    depends_on:
-      - main-db
-    ports:
-      - 8008:8008
+        MODE: ${mu_main_be_MODE:-release}
 
-  main-db:
+    hostname: ${mu_main_be_HOSTNAME:-mu_main_be}
+
+    # Ports exposed to OTHER SERVICES but NOT the HOST machine
+    expose:
+      - ${mu_main_be_INTERNAL_PORT:-8008}
+
+    environment:
+      # `DATABASE_URL` is constructed from the `mu_main_db` variables, like this:
+      #   postgresql://{user}:{password}@{hostname}:{port}/{db}?sslmode=disable
+      DATABASE_URL: postgresql://${mu_main_db_USER:-postgres}:${mu_main_db_PASSWORD:-meetUN}@${mu_main_db_HOSTNAME:-mu_main_db}:${mu_main_db_INTERNAL_PORT:-5432}/${mu_main_db_DB:-meetun}?sslmode=disable
+      PORT: ${mu_main_be_INTERNAL_PORT:-8008}
+
+    depends_on:
+      - mu_main_db
+
+    ports:
+      - ${mu_main_be_EXPOSED_PORT:-8008}:${mu_main_be_INTERNAL_PORT:-8008}
+
+  mu_main_db:
     image: postgres:17-alpine
-    hostname: main_db # Hostname for which the container will be reachable
-    # The port exposed within the hostname is `5432` unless modified
+
+    # Hostname for which the service will be reachable
+    hostname: ${mu_main_db_HOSTNAME:-mu_main_db}
+
+    # Ports exposed to OTHER SERVICES but NOT the HOST machine
+    expose:
+      - ${mu_main_db_INTERNAL_PORT:-5432}
+
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-meetUN}
-      POSTGRES_DB: ${POSTGRES_DB:-meetun}
+      POSTGRES_USER: ${mu_main_db_USER:-postgres}
+      POSTGRES_PASSWORD: ${mu_main_db_PASSWORD:-meetUN}
+      POSTGRES_DB: ${mu_main_db_DB:-meetun}
+      PGPORT: ${mu_main_db_INTERNAL_PORT:-5432}
     volumes:
       - main-db-data:/var/lib/postgresql/data
 
