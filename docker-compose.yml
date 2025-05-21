@@ -28,11 +28,16 @@ services:
     # Hostname for which the service will be reachable
     hostname: ${mu_main_db_HOSTNAME:-mu_main_db}
 
+    # Ports exposed to OTHER SERVICES but NOT the HOST machine
+    expose:
+      - ${mu_main_db_INTERNAL_PORT:-5432}
+
     restart: always
     environment:
       POSTGRES_USER: ${mu_main_db_USER:-postgres}
       POSTGRES_PASSWORD: ${mu_main_db_PASSWORD:-meetUN}
       POSTGRES_DB: ${mu_main_db_DB:-meetun}
+      PGPORT: ${mu_main_db_INTERNAL_PORT:-5432}
     volumes:
       - main-db-data:/var/lib/postgresql/data
 
