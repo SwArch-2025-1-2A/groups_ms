@@ -1,5 +1,5 @@
 services:
-  main-api:
+  mu_main_be:
     build:
       context: .
       args:
@@ -9,11 +9,11 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@main_db:5432/meetun?sslmode=disable}
       PORT: 8008
     depends_on:
-      - main-db
+      - mu_main_db
     ports:
       - 8008:8008
 
-  main-db:
+  mu_main_db:
     image: postgres:17-alpine
     hostname: main_db # Hostname for which the container will be reachable
     # The port exposed within the hostname is `5432` unless modified
