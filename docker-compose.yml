@@ -4,12 +4,21 @@ services:
       context: .
       args:
         MODE: ${mu_main_be_MODE:-release}
+
+    hostname: ${mu_main_be_HOSTNAME:-mu_main_be}
+
+    # Ports exposed to OTHER SERVICES but NOT the HOST machine
+    expose:
+      - ${mu_main_be_INTERNAL_PORT:-8008}
+
     environment:
       # `DATABASE_URL` uses the internal port to connect to `mu_main_db` (the container one)
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:meetUN@mu_main_db:5432/meetun?sslmode=disable}
       PORT: ${mu_main_be_INTERNAL_PORT:-8008}
+
     depends_on:
       - mu_main_db
+
     ports:
       - ${mu_main_be_EXPOSED_PORT:-8008}:${mu_main_be_INTERNAL_PORT:-8008}
 
