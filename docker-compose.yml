@@ -12,7 +12,7 @@ services:
       - ${mu_main_be_INTERNAL_PORT:-8008}
 
     environment:
-      # `DATABASE_URL` is constructed from:
+      # `DATABASE_URL` is constructed from the `mu_main_db` variables, like this:
       #   postgresql://{user}:{password}@{hostname}:{port}/{db}?sslmode=disable
       DATABASE_URL: postgresql://${mu_main_db_USER:-postgres}:${mu_main_db_PASSWORD:-meetUN}@${mu_main_db_HOSTNAME:-mu_main_db}:${mu_main_db_INTERNAL_PORT:-5432}/${mu_main_db_DB:-meetun}?sslmode=disable
       PORT: ${mu_main_be_INTERNAL_PORT:-8008}
