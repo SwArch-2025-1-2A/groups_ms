@@ -218,8 +218,9 @@ By default the API will be built in `release` [mode](#modes) and is built like t
 docker compose build
 ```
 
-In case you need to build it in other [`<mode>`](#modes). Run the following command
-replacing `<mode>` with the one you need:
+In case you need to build it in other [`<mode>`](#modes). Run the
+following command replacing `<mode>` with the one you need. (Or use a
+[`.env` file](#environment-variables))
 
 ```sh
 docker compose build --build-arg MODE=<mode>
