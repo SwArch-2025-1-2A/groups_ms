@@ -6,6 +6,8 @@
 
 - [Main API](#main-api)
   - [Table of contents](#table-of-contents)
+  - [Environment variables](#environment-variables)
+    - [Generating a working `.env` file](#generating-a-working-env-file)
   - [Modes](#modes)
   - [Database migrations](#database-migrations)
     - [Create a new migration](#create-a-new-migration)
@@ -25,7 +27,30 @@
 
 ---
 
+## Environment variables
+
+Many configurations can be set configuring a `.env` file. If you want
+to see and example about it, please go to [this file](./.env.example).
+
+> [!NOTE]
+> Once you have [created](#generating-a-working-env-file) your `.env`
+> file, you can run any docker command for
+> [building](#building-with-docker) or [running](#using-docker-to-run)
+> the project without having to do any extra work.
+
+### Generating a working `.env` file
+
+To generate a file based on a working template run this command:
+
+```sh
+cp .env.example .env
+```
+
 ## Modes
+
+> [!NOTE]
+> Modes are controlled by the
+> [environment variable](#environment-variables) `mu_main_be_MODE`
 
 The api can run in one these `MODE`s:
 
@@ -150,6 +175,11 @@ command, you may [run the project](#local-execution) using the generated executa
 cat .gitignore .prodignore > .dockerignore
 ```
 
+> [!TIP]
+> You can modify the behavior of the software system like
+> ports, hostnames and more by using a `.env` file. Please refer to
+> [this section](#environment-variables) for more information.
+
 To build the whole project using Docker, you can use the provided
 [docker-compose.yml](./docker-compose.yml). This will take care of everything related
 to the building and running processes, including each needed service to run the
@@ -214,6 +244,11 @@ go run main.go
 ```
 
 ### Using Docker to run
+
+> [!TIP]
+> You can modify the behavior of the software system like
+> ports, hostnames and more by using a `.env` file. Please refer to
+> [this section](#environment-variables) for more information.
 
 We personally recommend [this option](#running-while-rebuilding-images).
 
