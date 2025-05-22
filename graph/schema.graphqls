@@ -14,15 +14,37 @@ type User {
   name: String!
 }
 
-type Query {
-  todos: [Todo!]!
-}
-
 input NewTodo {
   text: String!
   userId: String!
 }
 
-type Mutation {
-  createTodo(input: NewTodo!): Todo!
+input NewGroup {
+  name: String!
+  description: String!
+  profile_pic: String!
+  isOpen: Boolean!
 }
+
+type Group {
+  id: ID!
+  name: String!
+  description: String!
+  profile_pic: String!
+  isVerified: Boolean!
+  isOpen: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  deletedAt: String
+};
+
+type Query {
+  todos: [Todo!]!
+  groups: [Group!]!
+}
+
+type Mutation {
+  createTodo(input: NewTodo!): Todo! 
+}
+
+
