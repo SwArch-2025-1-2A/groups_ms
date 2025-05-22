@@ -1,9 +1,6 @@
 package graph
 
 import (
-	"context"
-	"fmt"
-
 	"github.com/SwArch-2025-1-2A/backend/graph/model"
 	"github.com/SwArch-2025-1-2A/backend/repository"
 )
@@ -17,10 +14,10 @@ type Resolver struct {
 	Repo  repository.Queries
 }
 
-func (r *queryResolver) Groups(ctx context.Context) ([]repository.Group, error) {
-	dbGroups, err := r.Repo.GetGroups(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("issue fetching groups: %w", err)
-	}
-	return dbGroups, nil
-}
+// func (r *queryResolver) Groups(ctx context.Context) ([]*model.Group, error) {
+// 	dbGroups, err := r.Repo.GetGroups(ctx)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("issue fetching groups: %w", err)
+// 	}
+// 	return dbGroups, nil
+// }

@@ -2,7 +2,25 @@
 
 package model
 
+type Group struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ProfilePic  string `json:"profile_pic"`
+	IsVerified  bool   `json:"isVerified"`
+	IsOpen      bool   `json:"isOpen"`
+	CreatedAt   string `json:"createdAt"`
+	UpdatedAt   string `json:"updatedAt"`
+}
+
 type Mutation struct {
+}
+
+type NewGroup struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ProfilePic  string `json:"profile_pic"`
+	IsOpen      bool   `json:"isOpen"`
 }
 
 type NewTodo struct {

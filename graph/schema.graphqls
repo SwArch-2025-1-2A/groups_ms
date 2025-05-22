@@ -34,8 +34,7 @@ type Group {
   isVerified: Boolean!
   isOpen: Boolean!
   createdAt: String!
-  updatedAt: String!
-  deletedAt: String
+  updatedAt: String!  
 }
 
 type Query {

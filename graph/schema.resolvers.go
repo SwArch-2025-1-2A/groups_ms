@@ -35,6 +35,11 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
 }
 
+// Groups is the resolver for the groups field.
+func (r *queryResolver) Groups(ctx context.Context) ([]*model.Group, error) {
+	panic(fmt.Errorf("not implemented: Groups - groups"))
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
