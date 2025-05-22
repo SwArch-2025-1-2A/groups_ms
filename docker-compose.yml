@@ -5,6 +5,8 @@ services:
       args:
         MODE: ${mu_main_be_MODE:-release}
 
+    container_name: ${mu_main_be_HOSTNAME:-mu_main_be}
+
     hostname: ${mu_main_be_HOSTNAME:-mu_main_be}
 
     # Ports exposed to OTHER SERVICES but NOT the HOST machine
