@@ -36,7 +36,7 @@ type Group {
   createdAt: String!
   updatedAt: String!
   deletedAt: String
-};
+}
 
 type Query {
   todos: [Todo!]!
