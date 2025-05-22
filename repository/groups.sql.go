@@ -47,6 +47,42 @@ func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) (Group
 	return i, err
 }
 
+const getGroups = `-- name: GetGroups :many
+SELECT id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at FROM "Group"
+WHERE "deleted_at" is NULL
+ORDER BY "name"
+`
+
+func (q *Queries) GetGroups(ctx context.Context) ([]Group, error) {
+	rows, err := q.db.Query(ctx, getGroups)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Group
+	for rows.Next() {
+		var i Group
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Description,
+			&i.ProfilePic,
+			&i.IsVerified,
+			&i.IsOpen,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const softDeleteGroup = `-- name: SoftDeleteGroup :one
 UPDATE "Group"
 SET "deleted_at" = now()

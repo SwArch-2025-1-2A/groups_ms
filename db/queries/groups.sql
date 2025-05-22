@@ -14,3 +14,8 @@ UPDATE "Group"
 SET "deleted_at" = now()
 WHERE "id" = $1
 RETURNING *;
+
+-- name: GetGroups :many
+SELECT * FROM "Group"
+WHERE "deleted_at" is NULL
+ORDER BY "name";
