@@ -1,5 +1,5 @@
 -- name: CreateGroup :one
-INSERT INTO "Group" ("name", "description", "profile_pic", "isOpen" )
+INSERT INTO "Group" ("name", "description", "profilePic", "isOpen" )
 VALUES ($1, $2, $3, $4)
 RETURNING *;
 
@@ -14,3 +14,13 @@ UPDATE "Group"
 SET "deleted_at" = now()
 WHERE "id" = $1
 RETURNING *;
+
+-- name: GetGroups :many
+SELECT * FROM "Group"
+WHERE "deleted_at" IS NULL
+ORDER BY "name";
+
+-- name: GetImage :one
+SELECT "profilePic" FROM "Group"
+WHERE "deleted_at" IS NULL
+AND "id" = $1;

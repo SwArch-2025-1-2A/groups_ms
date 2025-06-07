@@ -24,7 +24,11 @@ func main() {
 		groups := api.Group("/groups")
 		{
 			groups.POST("", handlers.CreateGroupsHandler)
-			// groups.GET("/groups")
+			groups.GET("", handlers.GetGroupsHandler)
+		}
+		images := api.Group("/images/:id")
+		{
+			images.GET("", handlers.GetImageHandler)
 		}
 	}
 

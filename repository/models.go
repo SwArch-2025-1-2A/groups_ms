@@ -127,11 +127,11 @@ type Event struct {
 
 type Group struct {
 	ID          uuid.UUID
-	Name        pgtype.Text
+	Name        string
 	Description pgtype.Text
-	ProfilePic  pgtype.Text
-	IsVerified  pgtype.Bool
-	IsOpen      pgtype.Bool
+	ProfilePic  []byte
+	IsVerified  bool
+	IsOpen      bool
 	CreatedAt   pgtype.Timestamp
 	UpdatedAt   pgtype.Timestamp
 	DeletedAt   pgtype.Timestamp
