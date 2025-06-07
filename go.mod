@@ -1,4 +1,4 @@
-module github.com/SwArch-2025-1-2A/backend
+module github.com/SwArch-2025-1-2A/groups_ms
 
 go 1.24.3
 

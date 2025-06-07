@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/SwArch-2025-1-2A/backend/app"
-	"github.com/SwArch-2025-1-2A/backend/handlers"
+	"github.com/SwArch-2025-1-2A/groups_ms/app"
+	"github.com/SwArch-2025-1-2A/groups_ms/handlers"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/SwArch-2025-1-2A/backend/app"
+	"github.com/SwArch-2025-1-2A/groups_ms/app"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgtype"
 )

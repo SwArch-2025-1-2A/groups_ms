@@ -1,10 +1,10 @@
-# Main API
+# Groups API
 
 ---
 
 ## Table of contents
 
-- [Main API](#main-api)
+- [Groups API](#groups-api)
   - [Table of contents](#table-of-contents)
   - [Environment variables](#environment-variables)
     - [Generating a working `.env` file](#generating-a-working-env-file)
@@ -141,13 +141,6 @@ project directory. Make sure you have
    This command will generate the necessary go code based on the SQL files
    in the `db` directory. The generated code will be placed in the `./repository`
    directory.
-
-5. Generate the GraphQL models and resolver(s) by running the following command
-in the project directory:
-
-    ```sh
-    go run github.com/99designs/gqlgen generate
-    ```
 
 #### 2. Local build instructions
 

@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/SwArch-2025-1-2A/backend/repository"
+	"github.com/SwArch-2025-1-2A/groups_ms/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
