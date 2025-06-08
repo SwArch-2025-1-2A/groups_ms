@@ -4,7 +4,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -62,13 +61,11 @@ func CreateGroupsHandler(c *gin.Context) {
 		return
 	}
 
-	port := os.Getenv("PORT")
-
 	grpResponse := GroupResponse{
 		ID:            grp.ID,
 		Name:          grp.Name,
 		Description:   grp.Description.String,
-		ProfilePicURL: "http://localhost:" + port + "/api/images/" + grp.ID.String(),
+		ProfilePicURL: GenerateImageURL(grp.ID),
 		IsVerified:    grp.IsVerified,
 		IsOpen:        grp.IsOpen,
 		CreatedAt:     grp.CreatedAt.Time,
@@ -103,14 +100,13 @@ func GetGroupsHandler(c *gin.Context) {
 	grps, err := app.Queries.GetGroups(app.Context)
 
 	groups := make([]GroupResponse, 0, len(grps))
-	port := os.Getenv("PORT")
 
 	for _, g := range grps {
 		group := GroupResponse{
 			ID:            g.ID,
 			Name:          g.Name,
 			Description:   g.Description.String,
-			ProfilePicURL: "http://localhost:" + port + "/api/images/" + g.ID.String(),
+			ProfilePicURL: GenerateImageURL(g.ID),
 			IsVerified:    g.IsVerified,
 			IsOpen:        g.IsOpen,
 			CreatedAt:     g.CreatedAt.Time,

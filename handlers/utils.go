@@ -3,9 +3,11 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/SwArch-2025-1-2A/groups_ms/app"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -39,4 +41,11 @@ func ToPgBool(b *bool) pgtype.Bool {
 		return pgtype.Bool{Valid: false}
 	}
 	return pgtype.Bool{Bool: *b, Valid: true}
+}
+
+// Generate the Image URL
+func GenerateImageURL(id uuid.UUID) string {
+	port := os.Getenv("PORT")
+	hostname := os.Getenv("LOCALHOST")
+	return "http://" + hostname + ":" + port + "/api/images/" + id.String()
 }
