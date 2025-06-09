@@ -3,7 +3,7 @@ set -euo pipefail # strict mode
 
 # Check if the DATABASE_URL environment variable is set
 if [ -z "${DATABASE_URL}" ]; then
-	echo "Error: DATABASE_URL environment variable is not set."
+	echo "Error: DATABASE_URL environment variable for groups microservice, is not set."
 	exit 1
 fi
 
@@ -15,5 +15,5 @@ sleep 10
 echo "Running migrations..."
 migrate -path db/migrations -database ${DATABASE_URL} -verbose up
 
-echo "[[[MAIN API]]] Running the API now!"
+echo "[[[Groups MS API]]] Running the Groups MS API now!"
 ./main
