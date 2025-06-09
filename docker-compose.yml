@@ -5,7 +5,9 @@ services:
       args:
         MODE: ${mu_groups_ms_MODE:-release}
 
-    hostname: ${mu_groups_ms_HOSTNAME:-mu_groups_ms}
+    container_name: ${mu_main_be_HOSTNAME:-mu_main_be}
+
+    hostname: ${mu_main_be_HOSTNAME:-mu_main_be}
 
     # Ports exposed to OTHER SERVICES but NOT the HOST machine
     expose:
