@@ -43,9 +43,9 @@ services:
       POSTGRES_DB: ${mu_groups_db_DB:-meetun}
       PGPORT: ${mu_groups_db_INTERNAL_PORT:-5432}
     volumes:
-      - main-db-data:/var/lib/postgresql/data
+      - mu-groups-db-data:/var/lib/postgresql/data
 
     command: ["postgres", "-c", "max_prepared_transactions=100", "-c", "max_connections=200"]
 
 volumes:
-  main-db-data:
+  mu-groups-db-data:
