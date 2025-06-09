@@ -24,9 +24,6 @@ COPY . .
 # Generate repositories
 RUN sqlc generate
 
-# Generate GraphQL models and resolvers
-RUN go run github.com/99designs/gqlgen generate
-
 # Build the application
 RUN go build -v -o main .
 

@@ -13,16 +13,16 @@ import (
 )
 
 const createGroup = `-- name: CreateGroup :one
-INSERT INTO "Group" ("name", "description", "profile_pic", "isOpen" )
+INSERT INTO "Group" ("name", "description", "profilePic", "isOpen" )
 VALUES ($1, $2, $3, $4)
-RETURNING id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at
+RETURNING id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at
 `
 
 type CreateGroupParams struct {
-	Name        pgtype.Text
+	Name        string
 	Description pgtype.Text
-	ProfilePic  pgtype.Text
-	IsOpen      pgtype.Bool
+	ProfilePic  []byte
+	IsOpen      bool
 }
 
 func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) (Group, error) {
@@ -47,11 +47,60 @@ func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) (Group
 	return i, err
 }
 
+const getGroups = `-- name: GetGroups :many
+SELECT id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at FROM "Group"
+WHERE "deleted_at" IS NULL
+ORDER BY "name"
+`
+
+func (q *Queries) GetGroups(ctx context.Context) ([]Group, error) {
+	rows, err := q.db.Query(ctx, getGroups)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Group
+	for rows.Next() {
+		var i Group
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Description,
+			&i.ProfilePic,
+			&i.IsVerified,
+			&i.IsOpen,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getImage = `-- name: GetImage :one
+SELECT "profilePic" FROM "Group"
+WHERE "deleted_at" IS NULL
+AND "id" = $1
+`
+
+func (q *Queries) GetImage(ctx context.Context, id uuid.UUID) ([]byte, error) {
+	row := q.db.QueryRow(ctx, getImage, id)
+	var profilePic []byte
+	err := row.Scan(&profilePic)
+	return profilePic, err
+}
+
 const softDeleteGroup = `-- name: SoftDeleteGroup :one
 UPDATE "Group"
 SET "deleted_at" = now()
 WHERE "id" = $1
-RETURNING id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at
+RETURNING id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at
 `
 
 func (q *Queries) SoftDeleteGroup(ctx context.Context, id uuid.UUID) (Group, error) {
@@ -75,7 +124,7 @@ const verifyGroup = `-- name: VerifyGroup :one
 UPDATE "Group"
 SET "isVerified" = true
 WHERE "id" = $1
-RETURNING id, name, description, profile_pic, "isVerified", "isOpen", created_at, updated_at, deleted_at
+RETURNING id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at
 `
 
 func (q *Queries) VerifyGroup(ctx context.Context, id uuid.UUID) (Group, error) {

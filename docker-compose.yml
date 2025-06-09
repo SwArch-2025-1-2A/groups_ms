@@ -1,9 +1,9 @@
 services:
-  mu_main_be:
+  mu_groups_ms:
     build:
       context: .
       args:
-        MODE: ${mu_main_be_MODE:-release}
+        MODE: ${mu_groups_ms_MODE:-release}
 
     container_name: ${mu_main_be_HOSTNAME:-mu_main_be}
 
@@ -11,38 +11,41 @@ services:
 
     # Ports exposed to OTHER SERVICES but NOT the HOST machine
     expose:
-      - ${mu_main_be_INTERNAL_PORT:-8008}
+      - ${mu_groups_ms_INTERNAL_PORT:-8008}
 
     environment:
-      # `DATABASE_URL` is constructed from the `mu_main_db` variables, like this:
+      # `DATABASE_URL` is constructed from the `mu_groups_db` variables, like this:
       #   postgresql://{user}:{password}@{hostname}:{port}/{db}?sslmode=disable
-      DATABASE_URL: postgresql://${mu_main_db_USER:-postgres}:${mu_main_db_PASSWORD:-meetUN}@${mu_main_db_HOSTNAME:-mu_main_db}:${mu_main_db_INTERNAL_PORT:-5432}/${mu_main_db_DB:-meetun}?sslmode=disable
-      PORT: ${mu_main_be_INTERNAL_PORT:-8008}
+      DATABASE_URL: postgresql://${mu_groups_db_USER:-postgres}:${mu_groups_db_PASSWORD:-meetUN}@${mu_groups_db_HOSTNAME:-mu_groups_db}:${mu_groups_db_INTERNAL_PORT:-5432}/${mu_groups_db_DB:-meetun}?sslmode=disable
+      PORT: ${mu_groups_ms_INTERNAL_PORT:-8008}
+      LOCALHOST: ${mu_groups_ms_HOSTNAME:-mu_groups_ms}
 
     depends_on:
-      - mu_main_db
+      - mu_groups_db
 
     ports:
-      - ${mu_main_be_EXPOSED_PORT:-8008}:${mu_main_be_INTERNAL_PORT:-8008}
+      - ${mu_groups_ms_EXPOSED_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
 
-  mu_main_db:
+  mu_groups_db:
     image: postgres:17-alpine
 
     # Hostname for which the service will be reachable
-    hostname: ${mu_main_db_HOSTNAME:-mu_main_db}
+    hostname: ${mu_groups_db_HOSTNAME:-mu_groups_db}
 
     # Ports exposed to OTHER SERVICES but NOT the HOST machine
     expose:
-      - ${mu_main_db_INTERNAL_PORT:-5432}
+      - ${mu_groups_db_INTERNAL_PORT:-5432}
 
     restart: always
     environment:
-      POSTGRES_USER: ${mu_main_db_USER:-postgres}
-      POSTGRES_PASSWORD: ${mu_main_db_PASSWORD:-meetUN}
-      POSTGRES_DB: ${mu_main_db_DB:-meetun}
-      PGPORT: ${mu_main_db_INTERNAL_PORT:-5432}
+      POSTGRES_USER: ${mu_groups_db_USER:-postgres}
+      POSTGRES_PASSWORD: ${mu_groups_db_PASSWORD:-meetUN}
+      POSTGRES_DB: ${mu_groups_db_DB:-meetun}
+      PGPORT: ${mu_groups_db_INTERNAL_PORT:-5432}
     volumes:
       - main-db-data:/var/lib/postgresql/data
+
+    command: ["postgres", "-c", "max_prepared_transactions=100", "-c", "max_connections=200"]
 
 volumes:
   main-db-data:
