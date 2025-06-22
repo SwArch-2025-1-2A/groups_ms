@@ -29,10 +29,10 @@ func NewApp() *App {
 	}
 
 	if err := dbpool.Ping(ctx); err != nil {
-		log.Fatal(fmt.Errorf("could not connect to the DB, %w", err))
+		log.Fatal(fmt.Errorf("could not connect to the Groups DB, %w", err))
 	}
 
-	log.Println("Successfully connected to the Main DB")
+	log.Println("Successfully connected to the Groups DB")
 
 	queries := repository.New(dbpool)
 
