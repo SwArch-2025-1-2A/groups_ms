@@ -20,6 +20,11 @@ SELECT * FROM "Group"
 WHERE "deleted_at" IS NULL
 ORDER BY "name";
 
+-- name: GetGroupByID :one
+SELECT * FROM "Group"
+WHERE "deleted_at" IS NULL
+AND "id" = $1;
+
 -- name: GetImage :one
 SELECT "profilePic" FROM "Group"
 WHERE "deleted_at" IS NULL

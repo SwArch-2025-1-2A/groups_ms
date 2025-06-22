@@ -47,6 +47,29 @@ func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) (Group
 	return i, err
 }
 
+const getGroupByID = `-- name: GetGroupByID :one
+SELECT id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at FROM "Group"
+WHERE "deleted_at" IS NULL
+AND "id" = $1
+`
+
+func (q *Queries) GetGroupByID(ctx context.Context, id uuid.UUID) (Group, error) {
+	row := q.db.QueryRow(ctx, getGroupByID, id)
+	var i Group
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Description,
+		&i.ProfilePic,
+		&i.IsVerified,
+		&i.IsOpen,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
 const getGroups = `-- name: GetGroups :many
 SELECT id, name, description, "profilePic", "isVerified", "isOpen", created_at, updated_at, deleted_at FROM "Group"
 WHERE "deleted_at" IS NULL
