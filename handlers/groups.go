@@ -146,6 +146,37 @@ func GetGroupByIDHandler(c *gin.Context) {
 
 }
 
+func DeleteGroupHandler(c *gin.Context) {
+	app, ok := GetApp(c)
+	if !ok {
+		return
+	}
+
+	grp := c.Param("id")
+	id, err := uuid.Parse(grp)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	_, err = app.Queries.SoftDeleteGroup(c, id)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "No Group with that ID",
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Internal Server Error",
+			})
+		}
+		log.Println(err.Error())
+		return
+	}
+
+	c.JSON(http.StatusNoContent, gin.H{})
+}
+
 func GetImageHandler(c *gin.Context) {
 	app, ok := GetApp(c)
 	if !ok {
