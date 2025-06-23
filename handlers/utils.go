@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/SwArch-2025-1-2A/groups_ms/app"
+	"github.com/SwArch-2025-1-2A/groups_ms/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -48,4 +49,20 @@ func GenerateImageURL(id uuid.UUID) string {
 	port := os.Getenv("PORT")
 	hostname := os.Getenv("LOCALHOST")
 	return "http://" + hostname + ":" + port + "/api/images/" + id.String()
+}
+
+// Bind the DB response to the API response when it has group(s) to give back
+func BindGroupResponse(grp repository.Group) GroupResponse {
+	grpResponse := GroupResponse{
+		ID:            grp.ID,
+		Name:          grp.Name,
+		Description:   grp.Description.String,
+		ProfilePicURL: GenerateImageURL(grp.ID),
+		IsVerified:    grp.IsVerified,
+		IsOpen:        grp.IsOpen,
+		CreatedAt:     grp.CreatedAt.Time,
+		UpdatedAt:     grp.UpdatedAt.Time,
+	}
+
+	return grpResponse
 }

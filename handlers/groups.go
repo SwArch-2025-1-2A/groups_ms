@@ -72,20 +72,9 @@ func CreateGroupsHandler(c *gin.Context) {
 		return
 	}
 
-	grpResponse := GroupResponse{
-		ID:            grp.ID,
-		Name:          grp.Name,
-		Description:   grp.Description.String,
-		ProfilePicURL: GenerateImageURL(grp.ID),
-		IsVerified:    grp.IsVerified,
-		IsOpen:        grp.IsOpen,
-		CreatedAt:     grp.CreatedAt.Time,
-		UpdatedAt:     grp.UpdatedAt.Time,
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
-		"data":   grpResponse,
+		"data":   BindGroupResponse(grp),
 	})
 
 }
@@ -102,17 +91,7 @@ func GetGroupsHandler(c *gin.Context) {
 	groups := make([]GroupResponse, 0, len(grps))
 
 	for _, g := range grps {
-		group := GroupResponse{
-			ID:            g.ID,
-			Name:          g.Name,
-			Description:   g.Description.String,
-			ProfilePicURL: GenerateImageURL(g.ID),
-			IsVerified:    g.IsVerified,
-			IsOpen:        g.IsOpen,
-			CreatedAt:     g.CreatedAt.Time,
-			UpdatedAt:     g.UpdatedAt.Time,
-		}
-		groups = append(groups, group)
+		groups = append(groups, BindGroupResponse(g))
 	}
 
 	if err != nil {
@@ -160,20 +139,9 @@ func GetGroupByIDHandler(c *gin.Context) {
 		return
 	}
 
-	grpResponse := GroupResponse{
-		ID:            grp.ID,
-		Name:          grp.Name,
-		Description:   grp.Description.String,
-		ProfilePicURL: GenerateImageURL(grp.ID),
-		IsVerified:    grp.IsVerified,
-		IsOpen:        grp.IsOpen,
-		CreatedAt:     grp.CreatedAt.Time,
-		UpdatedAt:     grp.UpdatedAt.Time,
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
-		"data":   grpResponse,
+		"data":   BindGroupResponse(grp),
 	})
 
 }
