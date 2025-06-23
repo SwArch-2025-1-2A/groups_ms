@@ -12,6 +12,17 @@ import (
 	"github.com/google/uuid"
 )
 
+type GroupResponse struct {
+	ID            uuid.UUID `json:"id"`
+	Name          string    `json:"name"`
+	Description   string    `json:"description"`
+	ProfilePicURL string    `json:"profilePicUrl"`
+	IsVerified    bool      `json:"isVerified"`
+	IsOpen        bool      `json:"isOpen"`
+	CreatedAt     time.Time `json:"createdAt"`
+	UpdatedAt     time.Time `json:"updatedAt"`
+}
+
 func CreateGroupsHandler(c *gin.Context) {
 
 	app, ok := GetApp(c)
@@ -79,17 +90,6 @@ func CreateGroupsHandler(c *gin.Context) {
 
 }
 
-type GroupResponse struct {
-	ID            uuid.UUID `json:"id"`
-	Name          string    `json:"name"`
-	Description   string    `json:"description"`
-	ProfilePicURL string    `json:"profilePicUrl"`
-	IsVerified    bool      `json:"isVerified"`
-	IsOpen        bool      `json:"isOpen"`
-	CreatedAt     time.Time `json:"createdAt"`
-	UpdatedAt     time.Time `json:"updatedAt"`
-}
-
 func GetGroupsHandler(c *gin.Context) {
 
 	app, ok := GetApp(c)
@@ -126,6 +126,54 @@ func GetGroupsHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
 		"data":   groups,
+	})
+
+}
+
+func GetGroupByIDHandler(c *gin.Context) {
+
+	app, ok := GetApp(c)
+	if !ok {
+		return
+	}
+
+	idStr := c.Param("id")
+	id, err := uuid.Parse(idStr)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	grp, err := app.Queries.GetGroupByID(c, id)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "No Group with that ID",
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Internal Server Error",
+			})
+		}
+		log.Println(err.Error())
+		return
+	}
+
+	grpResponse := GroupResponse{
+		ID:            grp.ID,
+		Name:          grp.Name,
+		Description:   grp.Description.String,
+		ProfilePicURL: GenerateImageURL(grp.ID),
+		IsVerified:    grp.IsVerified,
+		IsOpen:        grp.IsOpen,
+		CreatedAt:     grp.CreatedAt.Time,
+		UpdatedAt:     grp.UpdatedAt.Time,
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   grpResponse,
 	})
 
 }
