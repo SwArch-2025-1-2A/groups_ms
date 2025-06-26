@@ -25,6 +25,8 @@ func main() {
 		{
 			groups.POST("", handlers.CreateGroupsHandler)
 			groups.GET("", handlers.GetGroupsHandler)
+			groups.GET("/:id", handlers.GetGroupByIDHandler)
+			groups.DELETE("/:id", handlers.DeleteGroupHandler)
 		}
 		images := api.Group("/images/:id")
 		{

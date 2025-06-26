@@ -12,6 +12,17 @@ import (
 	"github.com/google/uuid"
 )
 
+type GroupResponse struct {
+	ID            uuid.UUID `json:"id"`
+	Name          string    `json:"name"`
+	Description   string    `json:"description"`
+	ProfilePicURL string    `json:"profilePicUrl"`
+	IsVerified    bool      `json:"isVerified"`
+	IsOpen        bool      `json:"isOpen"`
+	CreatedAt     time.Time `json:"createdAt"`
+	UpdatedAt     time.Time `json:"updatedAt"`
+}
+
 func CreateGroupsHandler(c *gin.Context) {
 
 	app, ok := GetApp(c)
@@ -61,33 +72,11 @@ func CreateGroupsHandler(c *gin.Context) {
 		return
 	}
 
-	grpResponse := GroupResponse{
-		ID:            grp.ID,
-		Name:          grp.Name,
-		Description:   grp.Description.String,
-		ProfilePicURL: GenerateImageURL(grp.ID),
-		IsVerified:    grp.IsVerified,
-		IsOpen:        grp.IsOpen,
-		CreatedAt:     grp.CreatedAt.Time,
-		UpdatedAt:     grp.UpdatedAt.Time,
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
-		"data":   grpResponse,
+		"data":   BindGroupResponse(grp),
 	})
 
-}
-
-type GroupResponse struct {
-	ID            uuid.UUID `json:"id"`
-	Name          string    `json:"name"`
-	Description   string    `json:"description"`
-	ProfilePicURL string    `json:"profilePicUrl"`
-	IsVerified    bool      `json:"isVerified"`
-	IsOpen        bool      `json:"isOpen"`
-	CreatedAt     time.Time `json:"createdAt"`
-	UpdatedAt     time.Time `json:"updatedAt"`
 }
 
 func GetGroupsHandler(c *gin.Context) {
@@ -102,17 +91,7 @@ func GetGroupsHandler(c *gin.Context) {
 	groups := make([]GroupResponse, 0, len(grps))
 
 	for _, g := range grps {
-		group := GroupResponse{
-			ID:            g.ID,
-			Name:          g.Name,
-			Description:   g.Description.String,
-			ProfilePicURL: GenerateImageURL(g.ID),
-			IsVerified:    g.IsVerified,
-			IsOpen:        g.IsOpen,
-			CreatedAt:     g.CreatedAt.Time,
-			UpdatedAt:     g.UpdatedAt.Time,
-		}
-		groups = append(groups, group)
+		groups = append(groups, BindGroupResponse(g))
 	}
 
 	if err != nil {
@@ -128,6 +107,74 @@ func GetGroupsHandler(c *gin.Context) {
 		"data":   groups,
 	})
 
+}
+
+func GetGroupByIDHandler(c *gin.Context) {
+
+	app, ok := GetApp(c)
+	if !ok {
+		return
+	}
+
+	idStr := c.Param("id")
+	id, err := uuid.Parse(idStr)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	grp, err := app.Queries.GetGroupByID(c, id)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "No Group with that ID",
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Internal Server Error",
+			})
+		}
+		log.Println(err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   BindGroupResponse(grp),
+	})
+
+}
+
+func DeleteGroupHandler(c *gin.Context) {
+	app, ok := GetApp(c)
+	if !ok {
+		return
+	}
+
+	grp := c.Param("id")
+	id, err := uuid.Parse(grp)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	_, err = app.Queries.SoftDeleteGroup(c, id)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "No Group with that ID",
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Internal Server Error",
+			})
+		}
+		log.Println(err.Error())
+		return
+	}
+
+	c.JSON(http.StatusNoContent, gin.H{})
 }
 
 func GetImageHandler(c *gin.Context) {
