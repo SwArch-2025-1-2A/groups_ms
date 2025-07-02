@@ -205,22 +205,15 @@ docker compose down --remove-orphans --volumes
 
 #### Building modes in docker
 
-By default the API will be built in `release` [mode](#modes) and is built like this:
+For local development, please use the following command:
 
 ```sh
-docker compose build
+docker compose --profile dev build
 ```
 
-In case you need to build it in other [`<mode>`](#modes). Run the
-following command replacing `<mode>` with the one you need. (Or use a
-[`.env` file](#environment-variables))
+This build mode will create the docker images for development, based on the [docker compose](docker-compose.yml) configuration file. There is another service, inteded for production, but it should be ran along with all the project, so in practice you will not need
 
-```sh
-docker compose build --build-arg MODE=<mode>
-```
-
-This command will create the docker images the needed images for each service
-based on the [docker compose](docker-compose.yml) configuration file. And you can
+You can
 run the Docker image using the provided [run](#using-docker-to-run) command.
 
 ## Running the project
@@ -263,7 +256,7 @@ It doesn't contemplate the current state of your files but the most recent built
 images. Make sure it is in the correct [`mode`](#modes)
 
 ```sh
-docker compose up
+docker compose --profile dev up
 ```
 
 #### Running while rebuilding images
@@ -274,5 +267,5 @@ built in the [default mode](#building-modes-in-docker) and run after the
 building process has been completed
 
 ```sh
-docker compose up --build
+docker compose --profile dev up --build
 ```
