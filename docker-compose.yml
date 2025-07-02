@@ -23,8 +23,41 @@ services:
     depends_on:
       - mu_groups_db
 
+    networks:
+      - private
+
+    profiles:
+      - prod
+
+  mu_groups_ms_dev:
+    build:
+      context: .
+      args:
+        MODE: ${mu_groups_ms_MODE:-release}
+
+    container_name: ${mu_groups_ms_HOSTNAME:-mu_groups_ms}
+
+    hostname: ${mu_groups_ms_HOSTNAME:-mu_groups_ms}
+
+    # Ports exposed to OTHER SERVICES but NOT the HOST machine
+    expose:
+      - ${mu_groups_ms_INTERNAL_PORT:-8008}
+
+    environment:
+      # `DATABASE_URL` is constructed from the `mu_groups_db` variables, like this:
+      #   postgresql://{user}:{password}@{hostname}:{port}/{db}?sslmode=disable
+      DATABASE_URL: postgresql://${mu_groups_db_USER:-postgres}:${mu_groups_db_PASSWORD:-meetUN}@${mu_groups_db_HOSTNAME:-mu_groups_db}:${mu_groups_db_INTERNAL_PORT:-5432}/${mu_groups_db_DB:-meetun}?sslmode=disable
+      PORT: ${mu_groups_ms_INTERNAL_PORT:-8008}
+      LOCALHOST: ${mu_groups_ms_HOSTNAME:-mu_groups_ms}
+
+    depends_on:
+      - mu_groups_db
+
     ports:
       - ${mu_groups_ms_EXPOSED_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
+
+    profiles:
+      - dev
 
   mu_groups_db:
     image: postgres:17-alpine
