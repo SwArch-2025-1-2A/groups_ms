@@ -24,13 +24,15 @@ services:
       - mu_groups_db
 
     ports:
-      - ${mu_groups_ms_EXPOSED_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
+      - ${mu_groups_ms_EXTERNAL_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
 
   mu_groups_db:
     image: postgres:17-alpine
 
     # Hostname for which the service will be reachable
     hostname: ${mu_groups_db_HOSTNAME:-mu_groups_db}
+
+    container_name: ${mu_groups_db_HOSTNAME:-mu_groups_db}
 
     # Ports exposed to OTHER SERVICES but NOT the HOST machine
     expose:
