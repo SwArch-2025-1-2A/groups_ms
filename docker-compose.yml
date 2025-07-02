@@ -54,7 +54,7 @@ services:
       - mu_groups_db
 
     ports:
-      - ${mu_groups_ms_EXPOSED_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
+      - ${mu_groups_ms_EXTERNAL_PORT:-8008}:${mu_groups_ms_INTERNAL_PORT:-8008}
 
     profiles:
       - dev
