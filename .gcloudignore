@@ -1,8 +1,8 @@
-# --- .prodignore ---
+# --- .gcloudignore ---
 # Include at the top the file .gitignore
 
 # Deploy ignore file
-.prodignore
+.gcloudignore
 
 # Vscode
 .vscode/*

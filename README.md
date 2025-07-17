@@ -167,7 +167,7 @@ command, you may [run the project](#local-execution) using the generated executa
 > unnecessary files. Like so:
 
 ```sh
-cat .gitignore .prodignore > .dockerignore
+cat .gitignore .gcloudignore > .dockerignore
 ```
 
 > [!TIP]
