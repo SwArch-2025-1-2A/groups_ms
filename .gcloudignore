@@ -1,0 +1,25 @@
+# --- .gcloudignore ---
+# Include at the top the file .gitignore
+
+# Deploy ignore file
+.gcloudignore
+
+# Vscode
+.vscode/*
+.vscode/extensions.json
+
+# Docs
+README.md
+.env.example
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# --- Allow list ---
+!.env
