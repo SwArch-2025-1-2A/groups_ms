@@ -41,11 +41,11 @@ go.work.sum
 # --- Project files ---
 # This is the default binary that should be built when running `go build`
 main
-# --- .prodignore ---
+# --- .gcloudignore ---
 # Include at the top the file .gitignore
 
 # Deploy ignore file
-.prodignore
+.gcloudignore
 
 # Vscode
 .vscode/*
